@@ -1,0 +1,44 @@
+/* 40-ruta: DE AGUASCALIENTES A TIJUANA. Mapa grande; la linea y el contador 0 -> 1,900 km avanzan con el scroll
+   (reversible, sin pin). Etiquetas con fondo carbon, fuera de las lineas. */
+.ruta-grid { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+/* R4: el titulo va FUERA del mapa, arriba (como las otras secciones); el mapa es Mexico completo de Natural Earth */
+.ruta-t { margin: 0 0 26px; }
+.ruta-map { --cut: 12px; position: relative; margin: 0; aspect-ratio: 800 / 570; width: 100%; }
+.ruta-map > .fig { left: auto; right: 1px; bottom: auto; top: 1px; }
+.ruta-map svg { overflow: hidden; }
+.ruta-map::before { background-image: linear-gradient(rgba(201, 204, 209, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(201, 204, 209, 0.05) 1px, transparent 1px); background-size: 30px 30px; background-color: #16181b; }
+.ruta-map svg { position: absolute; inset: 1px; width: calc(100% - 2px); height: calc(100% - 2px); }
+.mx { fill: rgba(201, 204, 209, 0.07); stroke: var(--steel-2); stroke-width: 1.6; stroke-linejoin: round; }
+.mx-h { fill: url(#hatch); stroke: none; }
+.ruta-base { fill: none; stroke: rgba(201, 204, 209, 0.28); stroke-width: 2; stroke-dasharray: 2 7; }
+.ruta-line { fill: none; stroke: var(--steel); stroke-width: 3; stroke-linecap: square; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.ruta-pt { fill: var(--steel); }
+.ruta-pt--tj { fill: var(--c); stroke: var(--steel); stroke-width: 2; }
+.ruta-tag rect { fill: #16181b; stroke: var(--edge); stroke-width: 1; }
+.ruta-lb { font: 500 24px var(--f-m); letter-spacing: 0.12em; fill: var(--steel); }
+.ruta-k { font: 500 20px var(--f-m); letter-spacing: 0.1em; text-transform: uppercase; fill: var(--steel-2); }
+.ruta-km { font: 500 84px var(--f-m); fill: var(--weld); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.ruta-head { fill: var(--weld); filter: drop-shadow(0 0 6px rgba(79, 179, 255, 0.85)); opacity: 0; }
+.ruta.is-live .ruta-head { opacity: 1; }
+.ruta.is-live .ruta-line { stroke-dashoffset: 1; }
+.ruta-f { --cut: 10px; position: relative; margin: 0; aspect-ratio: 4 / 5; }
+/* pareja de fotos chicas y nitidas (las de origen son paneles de Instagram de ~200 px) */
+.ruta-side { display: grid; gap: 14px; }
+.ruta-pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.ruta-foot { display: grid; gap: 6px; justify-items: start; padding-right: 72px; }
+.ruta-note { font: 500 11.5px/1.5 var(--f-m); letter-spacing: 0.1em; text-transform: uppercase; color: var(--steel-2); }
+@media (min-width: 900px) {
+  /* compu: el mapa manda (7 de 12 columnas); la pareja va apilada y escalonada en las otras 5 */
+  .ruta-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(18px, 2.4vw, 32px); align-items: stretch; }
+  .ruta-map { grid-column: span 6; }
+  /* R4: la pareja arranca arriba con el mapa y el pie cierra abajo con su borde: la columna queda llena */
+  .ruta-side { grid-column: span 6; align-content: space-between; gap: 22px; }
+  .ruta-pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+  .ruta-f .fig { font-size: 9.5px; letter-spacing: 0.04em; padding: 6px 8px; }
+  .ruta-foot { padding-right: 0; }
+}
+/* tableta: mapa y pareja lado a lado (fotos chicas, no estiradas) */
+@media (min-width: 640px) and (max-width: 899px) {
+  .ruta-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 22px; align-items: end; }
+  .ruta-foot { padding-right: 0; }
+}
