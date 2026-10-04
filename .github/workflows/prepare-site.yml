@@ -1,0 +1,23 @@
+name: Prepare website
+on:
+  push:
+    paths:
+      - 'jas-inox-assets-*.zip'
+      - '.github/workflows/prepare-site.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract website
+        run: |
+          for bundle in jas-inox-assets-*.zip; do unzip -oq "$bundle"; done
+          touch docs/.nojekyll
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs
+          git commit -m 'Add complete responsive JAS INOX site' || exit 0
+          git push
